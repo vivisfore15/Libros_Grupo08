@@ -1,11 +1,17 @@
 package Controlador;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import javax.swing.JOptionPane;
 
 import Modelo.LibroDAO;
@@ -15,6 +21,7 @@ import Modelo.LibroDTO;
  * Servlet implementation class Libro
  */
 @WebServlet("/Libro")
+@MultipartConfig
 public class Libro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -108,6 +115,50 @@ public class Libro extends HttpServlet {
 					response.sendRedirect("Libros.jsp?men=Accion Cancelada");
 				} 
 			}
+			
+			if(request.getParameter("cargar")!=null) {
+				
+				Part archivo= request.getPart("archivo");
+				//String Url="C:\\Users\\vivis\\eclipse-workspace\\Prestamos_08\\src\\main\\webapp\\Documentos\\";
+				//En Mysql: show variables like 'secure_file_priv'
+				//String tipo= archivo.getContentType();
+				//JOptionPane.showMessageDialog(null, tipo);
+				String Url="C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/";
+				
+				if(archivo.getContentType().equals("application/vnd.ms-excel")) {
+				try {
+				InputStream file= archivo.getInputStream();
+				File copia= new File(Url+"prueba08.csv");
+				FileOutputStream escribir= new FileOutputStream(copia);
+				int num=file.read();
+				while(num !=-1) {
+					escribir.write(num);
+					num=file.read();
+				}
+				file.close();
+				escribir.close();
+				JOptionPane.showMessageDialog(null, "Se cargo el archivo correctamente");
+				if(libDao.Cargar_Libros(Url+"prueba08.csv")) {
+					response.sendRedirect("Libros.jsp?men=Se registro los Libros correctamente");
+				}else
+				{
+					response.sendRedirect("Libros.jsp?men=No se registraron Libros");
+				}
+				}catch(Exception e) {
+					JOptionPane.showMessageDialog(null, "Error al cargar el archivo: "+e);
+					response.sendRedirect("Libros.jsp?men=Error al cargar el archivo: ");
+					
+				}
+				}else
+				{
+					response.sendRedirect("Libros.jsp?men=Formato de Archivo no permitido");
+					}
+			}
+			
+			
+			
+			
+			
 		}
 	}
 

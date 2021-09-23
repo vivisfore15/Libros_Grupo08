@@ -53,5 +53,10 @@ paginas="";
 <input type="submit" name="consultar" Value="Consultar"></div>
 </fieldset>
 </form>
+<form action="Libro" method="post" enctype="multipart/form-data">
+<div><label>Archivo: </label><input type="file" name="archivo" value="Examinar" accept="application/vnd.ms-excel"></div>
+<input type="submit" name="cargar" value="Cargar Archivo">
+</form>
+
 </body>
 </html>
