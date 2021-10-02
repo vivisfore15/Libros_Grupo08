@@ -16,6 +16,21 @@ public class PrestamosDTO {
 		this.fecha_Prestamo = fecha_Prestamo;
 		this.cant = cant;
 	}
+	
+	
+
+
+	public PrestamosDTO(int id_Prestamo, String estudiante, String libro, String fecha_Prestamo, int cant, int total) {
+		super();
+		this.id_Prestamo = id_Prestamo;
+		this.estudiante = estudiante;
+		this.libro = libro;
+		this.fecha_Prestamo = fecha_Prestamo;
+		this.cant = cant;
+		this.total = total;
+	}
+
+
 
 
 	public int getId_Prestamo() {

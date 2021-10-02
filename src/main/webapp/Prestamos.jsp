@@ -23,7 +23,9 @@ out.print("<script type='text/javascript'>alert('"+mensaje+"');</script>");
 %>
 
 <form action="Prestamos" method="post">
-<div><label>Libro: </label><input type="text" name="libro">
+<div><label>Libro: </label>
+<select id="listaLibros" name="libro">
+</select>
 <input type="submit" name="consultarLib" value="Consultar">
 <label><%=titulo%></label>
 <input type="text" name="isbn" value="<%=isbn%>"></div>
